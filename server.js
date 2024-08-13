@@ -11,9 +11,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/auth", authRoutes);
 
-app.get("/", (req, res) => {
-  res.status(200).json("Home Page Test");
-});
+// app.get("/", (req, res) => {
+//   res.status(200).json("Home Page Test");
+// });
 
 const PORT = process.env.PORT || 3000;
 
