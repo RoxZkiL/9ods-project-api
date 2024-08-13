@@ -18,13 +18,14 @@ const login = async (req, res) => {
       return res.status(400).json({ message: " Invalid email or password" });
     }
 
-    const token = jew.sign({ id: user.id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
 
     res.status(200).json({ token });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error });
+    console.error("Login error: ", error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 
