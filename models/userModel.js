@@ -7,10 +7,10 @@ const User = {
     ]);
     return result.rows[0];
   },
-  create: async (name, email, password, profileImage) => {
+  create: async (name, email, password, profile_image) => {
     const result = await pool.query(
-      "INSERT INTO users (name, email, password, profile_image) VALUES ($1, $2, $3, $4) RETURNING id",
-      [name, email, password, profileImage]
+      "INSERT INTO users (email, password, name, profile_image, is_admin) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+      [email, password, name, profile_image, is_admin]
     );
     return result.rows[0];
   },
