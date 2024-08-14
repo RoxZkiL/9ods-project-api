@@ -8,6 +8,8 @@ const login = async (req, res) => {
   try {
     const user = await User.findByEmail(email);
 
+    console.log("User object:", user);
+
     if (!user) {
       return res.status(400).json({ message: "Invalid email or password" });
     }
@@ -18,9 +20,15 @@ const login = async (req, res) => {
       return res.status(400).json({ message: "Invalid email or password" });
     }
 
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign(
+      { id: user.id, name: user.name, image: user.profile_image },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
+
+    console.log("Generated token:", token);
 
     res.status(200).json({ token });
   } catch (error) {
