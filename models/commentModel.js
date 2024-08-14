@@ -9,12 +9,20 @@ const Comment = {
     return result.rows[0];
   },
 
-  findByBlogId: async (blogId) => {
+  findByBlogId: async (blog_id) => {
     const result = await pool.query(
       "SELECT * FROM comments WHERE blog_id = $1 ORDER BY created_at DESC",
-      [blogId]
+      [blog_id]
     );
     return result.rows;
+  },
+
+  deleteComment: async (id) => {
+    const result = await pool.query(
+      "DELETE FROM comments WHERE id = $1 RETURNING *",
+      [id]
+    );
+    return result.rows[0];
   },
 };
 
