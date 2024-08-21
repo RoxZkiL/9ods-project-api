@@ -7,10 +7,24 @@ const User = {
     ]);
     return result.rows[0];
   },
-  create: async (name, email, password, profile_image) => {
+
+  createUser: async (name, email, password, is_admin) => {
     const result = await pool.query(
-      "INSERT INTO users (email, password, name, profile_image, is_admin) VALUES ($1, $2, $3, $4, $5) RETURNING *",
-      [email, password, name, profile_image, is_admin]
+      "INSERT INTO users (name, email, password, is_admin) VALUES ($1, $2, $3, $4) RETURNING *",
+      [name, email, password, is_admin]
+    );
+    return result.rows[0];
+  },
+
+  findUserById: async (id) => {
+    const result = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
+    return result.rows[0];
+  },
+
+  updatePassword: async (email, newPassword) => {
+    const result = await pool.query(
+      "UPDATE users SET password = $1 WHERE email = $2 RETURNING *",
+      [newPassword, email]
     );
     return result.rows[0];
   },

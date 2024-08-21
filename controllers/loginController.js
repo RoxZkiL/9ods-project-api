@@ -8,8 +8,6 @@ const login = async (req, res) => {
   try {
     const user = await User.findByEmail(email);
 
-    console.log("User object:", user);
-
     if (!user) {
       return res.status(400).json({ message: "Invalid email or password" });
     }
@@ -21,7 +19,7 @@ const login = async (req, res) => {
     }
 
     const token = jwt.sign(
-      { id: user.id, name: user.name, image: user.profile_image },
+      { id: user.id, name: user.name, is_admin: user.is_admin },
       process.env.JWT_SECRET,
       {
         expiresIn: "1h",

@@ -11,10 +11,11 @@ const authenticate = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log("Decoded token with verification:", decoded);
     req.user = {
       id: decoded.id,
       name: decoded.name,
-      image: decoded.image,
+      is_admin: decoded.is_admin,
     };
     next();
   } catch (error) {
