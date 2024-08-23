@@ -6,14 +6,24 @@ const {
   requestResetPassword,
   resetPassword,
 } = require("../controllers/passwordResetController");
+const {
+  validateLogin,
+  validateRegister,
+  validateResetPassword,
+  validateRequestResetPassword,
+} = require("../middlewares/validatorMiddleware");
 const authenticate = require("../middlewares/authMiddleware");
 
-router.post("/register", register);
+router.post("/register", validateRegister, register);
 
-router.post("/login", login);
+router.post("/login", validateLogin, login);
 
-router.post("/request-password-reset", requestResetPassword);
+router.post(
+  "/request-password-reset",
+  validateRequestResetPassword,
+  requestResetPassword
+);
 
-router.put("/reset-password", resetPassword);
+router.put("/reset-password", validateResetPassword, resetPassword);
 
 module.exports = router;

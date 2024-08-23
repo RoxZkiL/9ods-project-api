@@ -47,21 +47,9 @@ const requestResetPassword = async (req, res) => {
 };
 
 const resetPassword = async (req, res) => {
-  const { newPassword, confirmNewPassword } = req.body;
+  const { newPassword } = req.body;
 
   const token = req.headers.authorization?.split(" ")[1];
-
-  if (newPassword !== confirmNewPassword) {
-    return res.status(400).json({ message: "Passwords do not match" });
-  }
-
-  const passwordRegExValidator = /(?=.*[a-zA-Z]).{6,}/;
-
-  if (!passwordRegExValidator.test(newPassword)) {
-    return res.status(400).json({
-      message: "Password must be at least 6 characters and contain a letter",
-    });
-  }
 
   try {
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
