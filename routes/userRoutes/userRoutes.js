@@ -1,18 +1,18 @@
 const express = require("express");
 const router = express.Router();
-const register = require("../controllers/registerController");
-const login = require("../controllers/loginController");
+const register = require("../../controllers/userControllers/registerController");
+const login = require("../../controllers/userControllers/loginController");
 const {
   requestResetPassword,
   resetPassword,
-} = require("../controllers/passwordResetController");
+} = require("../../controllers/userControllers/passwordResetController");
 const {
   validateLogin,
   validateRegister,
   validateResetPassword,
   validateRequestResetPassword,
-} = require("../middlewares/validatorMiddleware");
-const authenticate = require("../middlewares/authMiddleware");
+} = require("../../middlewares/userMiddlewares/validatorMiddleware");
+//const authenticate = require("../../middlewares/userMiddlewares/authMiddleware");
 
 router.post("/register", validateRegister, register);
 
